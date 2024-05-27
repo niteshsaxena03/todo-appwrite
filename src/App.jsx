@@ -1,16 +1,20 @@
-
-import './App.css'
+import "./App.css";
+import { BrowserRouter,Route, Routes } from "react-router-dom";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 
 function App() {
-  
-
   return (
     <>
-      <h1>appwrite practice</h1>
-      <h2>i know web dev</h2>
-      <h3>just need to learn tailwind</h3>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Login/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
+        </Routes>
+      </BrowserRouter>
+
     </>
-  )
+  );
 }
 
-export default App
+export default App;
