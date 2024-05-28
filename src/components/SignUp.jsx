@@ -1,36 +1,35 @@
-import { useState } from "react";
+import  { useState } from "react";
 import { account } from "../appwrite/appwriteConfig";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import '../index.css';
 
-function SignUp() {
-  const navigation = useNavigate();
-
-  //creating basic structure of user object for signup purpose
+function Signup() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  //creating a Method for signUp
+  //Signup
   const signupUser = async (e) => {
     e.preventDefault();
 
-    //creating a promise to create a new user,this is main thing
     const promise = account.create(
       uuidv4(),
       user.email,
       user.password,
       user.name
     );
+
     promise.then(
       function (response) {
         console.log(response);
-        navigation("/profile"); //in case of successful signup
+        navigate("/profile"); //success
       },
       function (error) {
-        console.log(error); //in case of failure
+        console.log(error); // Failure
       }
     );
   };
@@ -118,8 +117,9 @@ function SignUp() {
                 <button
                   type="submit"
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={signupUser}
                 >
-                  Sign in
+                  Sign up
                 </button>
               </div>
             </form>
@@ -204,4 +204,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;
