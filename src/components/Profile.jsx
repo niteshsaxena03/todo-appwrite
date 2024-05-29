@@ -1,39 +1,36 @@
+import { useState, useEffect } from "react";
 import { account } from "../appwrite/appwriteConfig";
-import { useNavigate,Link } from "react-router-dom";
-import Todo from "./Todo";
+import { useNavigate, Link } from "react-router-dom";
 import TodoForm from "./TodoForm";
-import { useState,useEffect } from "react";
+import Todo from "./Todo";
 
 function Profile() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const [userDetails,setUserDetails]=useState();
-  
+  const [userDetails, setUserDetails] = useState();
 
-  //all changes within useEffect hook
   useEffect(() => {
-    const getData=account.get();
-
+    const getData = account.get();
     getData.then(
-      function(response){
+      function (response) {
         setUserDetails(response);
+        //console.log(userDetails);
       },
-      function(error){
+      function (error) {
         console.log(error);
       }
-    )
-
-    //function to log out user
-    function handleLogOut=async()=>{
-      try{
-        await account.deleteSession("current");
-        navigate("/");
-      }catch(error){
-        console.log(error);
-      }
-    }
+    );
   }, []);
-  
+
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession("current");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {userDetails ? (
@@ -43,12 +40,17 @@ function Profile() {
               <p className="text-xl">Hello {userDetails.name}</p>
             </div>
             <div>
-              <button className="bg-red-400 text-white p-1 rounded-md" onClick={handleLogOut}>
+              <button
+                className="bg-red-400 text-white p-1 rounded-md"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </div>
           </div>
+          {/* TODO FORM */}
           <TodoForm />
+          {/* TODOS BOX */}
           <Todo />
         </>
       ) : (
