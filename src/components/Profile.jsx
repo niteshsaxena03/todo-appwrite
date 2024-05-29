@@ -1,3 +1,6 @@
+import { account } from "../appwrite/appwriteConfig";
+import { useNavigate,Link } from "react-router-dom";
+
 function Profile() {
   return (
     <div>
