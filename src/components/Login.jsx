@@ -82,7 +82,7 @@ function Login() {
                     href="/signup"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    Don't have Account, Sign Up
+                    Dont have Account, Sign Up
                   </a>
                 </div>
               </div>
