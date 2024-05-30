@@ -17,6 +17,7 @@ function Todo() {
         "66540de80019205fb8f5"
       );
       setTodos(response.documents); // This will return an array
+      fetchTodos();
     } catch (error) {
       console.log(error);
     }
