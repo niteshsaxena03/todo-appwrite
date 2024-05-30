@@ -6,22 +6,37 @@ function Todo() {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    const fetchTodos = async () => {
-      setLoader(true);
-      try {
-        const response = await databases.listDocuments(
-          "66540dcf001fc3983bb5",
-          "66540de80019205fb8f5"
-        );
-        setTodos(response.documents); // This will return an array
-      } catch (error) {
-        console.log(error);
-      }
-      setLoader(false);
-    };
-
     fetchTodos();
   }, []);
+
+  const fetchTodos = async () => {
+    setLoader(true);
+    try {
+      const response = await databases.listDocuments(
+        "66540dcf001fc3983bb5",
+        "66540de80019205fb8f5"
+      );
+      setTodos(response.documents); // This will return an array
+    } catch (error) {
+      console.log(error);
+    }
+    setLoader(false);
+  };
+
+  const deleteTodo = async (id) => {
+    setLoader(true);
+    try {
+      await databases.deleteDocument(
+        "66540dcf001fc3983bb5",
+        "66540de80019205fb8f5",
+        id
+      );
+      fetchTodos(); // Refresh the list of todos after deletion
+    } catch (error) {
+      console.log(error);
+    }
+    setLoader(false);
+  };
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -38,7 +53,12 @@ function Todo() {
                   {/* Ensure this matches the attribute name */}
                 </div>
                 <div>
-                  <span className="text-red-400 cursor-pointer">Delete</span>
+                  <span
+                    className="text-red-400 cursor-pointer"
+                    onClick={() => deleteTodo(item.$id)}
+                  >
+                    Delete
+                  </span>
                 </div>
               </div>
             </div>
